@@ -63,3 +63,60 @@ classDiagram
     Usuario <|-- Administrador
     Vendedor -- Venta
     Administrador -- Producto
+nuevo diagrama 
+classDiagram
+
+    namespace Contratos_SOLID {
+        class IVendedor {
+            <<interface>>
+            +registrarVenta()
+            +buscarProducto()
+        }
+        class IAdministrador {
+            <<interface>>
+            +ajustarStock()
+            +cambiarPrecio()
+        }
+        class IInventariable {
+            <<interface>>
+            +actualizarStock()
+            +verificarStockMinimo()
+        }
+    }
+
+    namespace Modulo_Usuarios {
+        class Vendedor {
+            +registrarVenta()
+            +buscarProducto()
+        }
+        class Administrador {
+            +ajustarStock()
+            +cambiarPrecio()
+            +generarReporte()
+        }
+    }
+
+    namespace Modulo_Catalogo_e_Inventario {
+        class ProductoFisico {
+            +int id
+            +string codigo
+            +string nombre
+            +decimal precioBase
+        }
+        class ProductoDigital {
+            +int id
+            +string enlaceDescarga
+        }
+        class Inventario {
+            +int stockActual
+            +int stockMinimo
+        }
+    }
+
+    %% Interfaces segregadas (ISP)
+    IVendedor <|.. Vendedor
+    IAdministrador <|.. Administrador
+
+    %% Sustitución de Liskov (LSP): Solo ProductoFisico implementa stock
+    IInventariable <|.. ProductoFisico
+    IInventariable <|.. Inventario
