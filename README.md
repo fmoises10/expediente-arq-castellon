@@ -45,3 +45,21 @@ classDiagram
     Producto "1" -- "*" DetalleVenta : compone
     Venta "1" *-- "*" DetalleVenta : contiene
     Usuario "1" -- "*" Venta : registra
+
+
+
+### 3.1. Diagrama Original (Acoplado)
+Este diagrama inicial centraliza todas las responsabilidades, lo que genera un alto acoplamiento entre los módulos.
+
+```mermaid
+classDiagram
+    class Usuario
+    class Vendedor { +registrarVenta() }
+    class Administrador { +ajustarStock() }
+    class Producto { +descontarStock() }
+    class Venta { +procesarPago() }
+    
+    Usuario <|-- Vendedor
+    Usuario <|-- Administrador
+    Vendedor -- Venta
+    Administrador -- Producto
