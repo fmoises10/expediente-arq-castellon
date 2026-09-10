@@ -1,19 +1,21 @@
 # Expediente de Arquitectura — Comercio: Tienda con Inventario
 
-**Estudiante:** Félix Moisés Castellón  
-**Variante elegida:** Variante 4 — Comercio ("Tienda con inventario")  
+**Estudiante:** Félix Moisés Castellón
+**Variante elegida:** Variante 4 — Comercio ("Tienda con inventario")
 **Justificación:** Trabajo en el rubro comercial y conozco la operativa de gestión de stock y ventas.
 
 ## 1. Actores del Sistema
+
 * **Vendedor (Operador):** Busca productos y registra ventas.
 * **Administrador (Supervisor):** Ajusta stock, cambia precios y ve reportes.
 
 ## 2. Inventario de Módulos
+
 * **Catálogo:** Gestiona información de productos y precios.
 * **Inventario:** Controla las existencias y alertas de stock mínimo.
 * **Ventas:** Procesa transacciones (carrito, pago, entrega).
 * **Notificaciones:** Envía alertas de stock crítico.
-* **Reportes:** Genera estadísticas de ventas y más vendidos.
+* **Reportes:** Genera estadísticas de ventas y productos más vendidos.
 
 ## 3. Primer Diagrama de Clases
 
@@ -27,6 +29,7 @@ classDiagram
         +int stockMinimo
         +actualizarStock(int cantidad)
     }
+
     class Venta {
         +String id
         +DateTime fecha
@@ -34,36 +37,51 @@ classDiagram
         +double total
         +confirmar()
     }
+
     class DetalleVenta {
         +int cantidad
         +double precioUnitario
     }
+
     class Usuario {
         +String id
         +String rol
     }
+
     Producto "1" -- "*" DetalleVenta : compone
     Venta "1" *-- "*" DetalleVenta : contiene
     Usuario "1" -- "*" Venta : registra
+```
 
+## 3.1. Diagrama Original (Acoplado)
 
-
-### 3.1. Diagrama Original (Acoplado)
 Este diagrama inicial centraliza todas las responsabilidades, lo que genera un alto acoplamiento entre los módulos.
 
 ```mermaid
 classDiagram
     class Usuario
-    class Vendedor { +registrarVenta() }
-    class Administrador { +ajustarStock() }
-    class Producto { +descontarStock() }
-    class Venta { +procesarPago() }
-    
+    class Vendedor {
+        +registrarVenta()
+    }
+    class Administrador {
+        +ajustarStock()
+    }
+    class Producto {
+        +descontarStock()
+    }
+    class Venta {
+        +procesarPago()
+    }
+
     Usuario <|-- Vendedor
     Usuario <|-- Administrador
     Vendedor -- Venta
     Administrador -- Producto
-nuevo diagrama 
+```
+
+## 3.2. Nuevo Diagrama Aplicando SOLID
+
+```mermaid
 classDiagram
 
     namespace Contratos_SOLID {
@@ -72,11 +90,13 @@ classDiagram
             +registrarVenta()
             +buscarProducto()
         }
+
         class IAdministrador {
             <<interface>>
             +ajustarStock()
             +cambiarPrecio()
         }
+
         class IInventariable {
             <<interface>>
             +actualizarStock()
@@ -89,6 +109,7 @@ classDiagram
             +registrarVenta()
             +buscarProducto()
         }
+
         class Administrador {
             +ajustarStock()
             +cambiarPrecio()
@@ -103,20 +124,21 @@ classDiagram
             +string nombre
             +decimal precioBase
         }
+
         class ProductoDigital {
             +int id
             +string enlaceDescarga
         }
+
         class Inventario {
             +int stockActual
             +int stockMinimo
         }
     }
 
-    %% Interfaces segregadas (ISP)
     IVendedor <|.. Vendedor
     IAdministrador <|.. Administrador
 
-    %% Sustitución de Liskov (LSP): Solo ProductoFisico implementa stock
     IInventariable <|.. ProductoFisico
     IInventariable <|.. Inventario
+```
