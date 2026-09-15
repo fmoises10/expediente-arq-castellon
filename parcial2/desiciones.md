@@ -35,4 +35,4 @@ La clase `Membresias` no tiene que modificarse cada vez que aparece una nueva fo
 
 Por ejemplo, se puede crear `Promociones` implementando `Notificacion` y agregarla a la lista.
 
-De esta manera podemos agregar nuevas notificaciones sin modificar la clase que ya funciona.
+
