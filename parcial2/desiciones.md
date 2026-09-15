@@ -9,21 +9,30 @@ Sin Observer, cada nuevo aviso obligaría a modificar nuevamente el módulo de m
 
 ## Situación 2 — Strategy
 
-Aplico el patrón Strategy porque el cálculo de la tarifa cambia según la franja horaria y las reglas se modifican con frecuencia.
-Cada regla puede mantenerse separada y seleccionarse según corresponda.
-Esto evita tener los mismos `if/else` copiados en facturación y cotizaciones.
-Sin Strategy, cada cambio de temporada obligaría a modificar varios lugares y puede generar inconsistencias.
+Usaría Strategy porque el precio del gimnasio cambia dependiendo del horario o del día.
+
+Por ejemplo, en la mañana se cobra normal, en la noche aumenta y el fin de semana se aplica un descuento.
+
+De esta forma cada cálculo puede estar separado y no tener todos los casos juntos en muchos `if/else`.
+
+Si el dueño cambia una regla, se puede cambiar esa parte sin tener que modificar todo el módulo de facturación.
 
 ## Situación 3 — Adapter
 
-Aplico el patrón Adapter porque el gateway externo tiene una interfaz diferente a la que necesita el sistema del gimnasio.
-El SDK usa nombres, unidades y datos propios del proveedor, por ejemplo montos en centavos.
-El Adapter traduce esa interfaz externa a la interfaz que entiende el sistema del gimnasio.
-Sin Adapter, el código quedaría acoplado directamente al proveedor y cambiarlo sería más costoso.
+Usaría Adapter porque el sistema del gimnasio y el sistema de pagos externo no trabajan de la misma forma.
+
+El proveedor usa sus propios nombres y además maneja el monto en centavos.
+
+El Adapter sirve para convertir esos datos y hacer que el sistema del gimnasio pueda trabajar con el proveedor.
+
+Así, si después se cambia de proveedor, no sería necesario cambiar todo el código que utiliza los pagos.
 
 ## P2.3 — SOLID
 
-La implementación del Observer rescata el principio Open/Closed (OCP).
-La clase `Membresias` trabaja con la abstracción `Notificacion` y no necesita modificarse cuando aparece un nuevo interesado.
-Por ejemplo, se puede agregar `Promociones` implementando `Notificacion` y registrándola con `agregar()`.
-La decisión concreta está en usar una lista de `Notificacion` y no una lista de clases concretas.
+La solución del Observer se relaciona con el principio Open/Closed (OCP).
+
+La clase `Membresias` no tiene que modificarse cada vez que aparece una nueva forma de notificación.
+
+Por ejemplo, se puede crear `Promociones` implementando `Notificacion` y agregarla a la lista.
+
+De esta manera podemos agregar nuevas notificaciones sin modificar la clase que ya funciona.
