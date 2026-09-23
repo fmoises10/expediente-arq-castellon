@@ -6,10 +6,11 @@ namespace Integradora.Comedor;
 
 public class CalculadorPrecio
 {
+//SE SEPARA EL SWITCH CASE POR PRINCIPIOS SOLID PARA NO TENER TODO EN UNA SOLA CLASE
     public decimal Calcular(string tipoMenu, int cantidad)
     {
         decimal precioBase;
-
+//ocp estaria aqui para abrir a mas codigo
         switch (tipoMenu)
         {
             case "estandar":
@@ -37,6 +38,7 @@ public class GestorDePedidos
 //en teoria aqui habia muchas responsabilidades y aplicamos single responsability
 {
     private CalculadorPrecio calculadorPrecio = new CalculadorPrecio();
+    //SEPARAMOS LAS COSAS 
 
     public void ProcesarPedido(string estudiante, string tipoMenu, int cantidad)
     {
@@ -55,3 +57,4 @@ public static class Demo
         new GestorDePedidos().ProcesarPedido("Noelia", "vegetariano", 2);
     }
 }
+//no se si terminaria asi pero intuyo   q es lo ideal

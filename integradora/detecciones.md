@@ -1,5 +1,5 @@
 # Detecciones SOLID
-
+se evidencian 3 problemas 
 ## 1. SRP o responsabilidad unica:
 
 Donde: En `GestorDePedidos`.
