@@ -29,6 +29,7 @@ public class CalculadorPrecio
                 precioBase = 12;
                 break;
         }
+        //aqui el codigo esta sanado en open y close
 
         return precioBase * cantidad;
     }
